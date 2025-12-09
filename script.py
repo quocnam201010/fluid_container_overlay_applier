@@ -1,5 +1,20 @@
 import os
-from PIL import Image
+import sys
+import subprocess
+
+# Ensure required packages are installed at runtime.
+try:
+    from PIL import Image
+except ImportError:
+    print("Pillow not found. Attempting to install 'Pillow' via pip...")
+    try:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "Pillow"])
+    except Exception as e:
+        print("Automatic installation failed:", e)
+        print("Please install Pillow manually: python -m pip install Pillow")
+        raise
+    # Try import again after installation
+    from PIL import Image
 
 INPUT_DIR = "input"
 OUTPUT_DIR = "output"
